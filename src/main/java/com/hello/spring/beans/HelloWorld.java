@@ -8,7 +8,6 @@ public class HelloWorld {
     private String name;
 
     public HelloWorld() {
-        System.out.println("HelloWorld 构造函数");
     }
 
     public String getName() {
@@ -17,7 +16,6 @@ public class HelloWorld {
 
     public void setName(String name) {
         this.name = name;
-        System.out.println("setName " + name);
     }
 
     public void hello() {

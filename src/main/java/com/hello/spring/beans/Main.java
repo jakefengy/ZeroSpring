@@ -14,9 +14,22 @@ public class Main {
 
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-application-config.xml");
 
-        HelloWorld helloWorld = ctx.getBean(HelloWorld.class);
+//        HelloWorld helloWorld = ctx.getBean(HelloWorld.class);
+//
+//        helloWorld.hello();
 
-        helloWorld.hello();
+//        Car car = (Car) ctx.getBean("car");
+//        System.out.println(car.toString());
+//
+//        car = (Car) ctx.getBean("car2");
+//        System.out.println(car.toString());
+
+        Person person = (Person) ctx.getBean("personList");
+        System.out.println(person.toString());
+
+        person = (Person) ctx.getBean("personMap");
+        System.out.println(person.toString());
+
     }
 
 }

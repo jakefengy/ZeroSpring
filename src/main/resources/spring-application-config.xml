@@ -4,8 +4,44 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 在spring中配置beans -->
+    <!-- 属性注入的方式，设置参数 -->
     <bean id="helloWorld" class="com.hello.spring.beans.HelloWorld">
         <property name="name" value="Spring Beans"/>
     </bean>
+
+    <!-- 构造器注入的方式，设置参数 -->
+    <bean id="car" class="com.hello.spring.beans.Car">
+        <constructor-arg value="Audi" name="name"/>
+        <constructor-arg value="100" name="price"/>
+    </bean>
+
+    <!-- 手动配置参数 -->
+    <bean id="car2" class="com.hello.spring.beans.Car">
+        <constructor-arg value="Audi" type="java.lang.String"/>
+        <constructor-arg value="300" type="int"/>
+    </bean>
+
+    <bean id="personList" class="com.hello.spring.beans.Person">
+        <property name="name" value="Tom"/>
+        <property name="age" value="18"/>
+        <property name="cars">
+            <list>
+                <ref bean="car"/>
+                <ref bean="car2"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="personMap" class="com.hello.spring.beans.Person">
+        <property name="name" value="Tom"/>
+        <property name="age" value="18"/>
+        <property name="carMap">
+            <map>
+                <entry key="AA" value-ref="car"/>
+                <entry key="BB" value-ref="car2"/>
+            </map>
+        </property>
+    </bean>
+
 
 </beans>
