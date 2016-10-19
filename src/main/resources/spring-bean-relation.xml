@@ -18,4 +18,13 @@
     <bean id="personDepend" class="com.hello.spring.autowire.Person"
           p:name="Tom" p:address-ref="addressParent" depends-on="car"/>
 
+
+    <!-- 演示bean的作用域 -->
+
+    <!-- scope= singleton: 表示该bean是单例模式，每次从ioc中取出的对象，都是同一个
+    scope= prototype: 每次从ioc中取出的时候，都会重新创建一个 -->
+    <bean id="car2" class="com.hello.spring.autowire.Car"
+          p:name="BenChi" p:price="2003"
+          scope="singleton"/>
+
 </beans>
