@@ -5,6 +5,8 @@
       <configuration>
         <fileset id="fileset" name="spring-application-context" removed="false">
           <file>file://$MODULE_DIR$/src/main/config/spring-application-config.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-bean-autowire.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-bean-relation.xml</file>
         </fileset>
       </configuration>
     </facet>

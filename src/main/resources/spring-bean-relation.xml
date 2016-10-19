@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 抽象bean 带有abstract=true的bean，可当作模版 -->
+    <bean id="address" p:city="XiaMen" p:street="SiMingQu" class="com.hello.spring.autowire.Address" abstract="true"/>
+
+    <!-- 演示bean的继承关系 -->
+    <bean id="addressParent" parent="address" p:street="HuLiQu"/>
+
+    <!-- 演示bean的依赖关系 -->
+
+    <bean id="car" class="com.hello.spring.autowire.Car"
+          p:name="Audi" p:price="500"/>
+
+    <!-- 如果spring ioc中没有依赖的bean，则抛异常。可以理解为，被依赖的bean先于依赖bean创建 -->
+    <bean id="personDepend" class="com.hello.spring.autowire.Person"
+          p:name="Tom" p:address-ref="addressParent" depends-on="car"/>
+
+</beans>

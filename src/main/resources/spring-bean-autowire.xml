@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="address" class="com.hello.spring.autowire.Address"
+          p:city="XiaMen" p:street="SiMingQu"/>
+
+    <bean id="autoWireCar" class="com.hello.spring.autowire.Car"
+          p:name="Audi" p:price="180"/>
+
+    <!--  自动装配：
+        byName: 如果bean的id与对象中的属性名字相同，则自动装配，否则放空
+        byType: 如果bean的类型，与对象中属性的类型相同，则自动装配，如果存在多个bean的类型，与属性的类型相似，则抛异常 -->
+    <bean id="person" class="com.hello.spring.autowire.Person"
+          p:name="Tom" autowire="byName"/>
+
+
+</beans>
