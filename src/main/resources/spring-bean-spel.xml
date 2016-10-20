@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 演示spel的简单用法 -->
+    <bean id="address" class="com.hello.spring.spel.Address" p:city="XM" p:street="#{'莲前西路'}"/>
+
+    <bean id="carEl" class="com.hello.spring.spel.Car" p:name="Audi" p:price="200"
+          p:perimeter="#{T(java.lang.Math).PI * 80}"/>
+
+    <bean id="person" class="com.hello.spring.spel.Person" p:name="Tom" p:street="#{address.street}"
+          p:car="#{carEl}" p:info="#{carEl.price>150?'金领':'白领'}"/>
+
+</beans>
