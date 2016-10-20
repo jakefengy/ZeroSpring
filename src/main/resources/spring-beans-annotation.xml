@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 测试通过使用注解的方式，向ioc容器中注册bean -->
+    <!-- 指定扫描的包名，在该包以及子包中的class，都会被注册（默认配置：use-default-filters="true"） -->
+
+    <!-- context:include-filter 通过单独指定的方式，将beans注册到ioc -->
+    <!-- context:exclude-filter 通过单独指定的方式，将beans移除ios -->
+
+    <!--filter 中的type，常用annotation和assignable
+    annotation：表示设置标签
+    assignable：表示设置类名-->
+    <context:component-scan base-package="com.hello.spring.annotation" use-default-filters="true">
+
+        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>-->
+        <!--<context:include-filter type="assignable" expression="com.hello.spring.annotation.repository.UserRepository"/>-->
+
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>-->
+        <!--<context:exclude-filter type="assignable" expression="com.hello.spring.annotation.repository.UserRepository"/>-->
+
+    </context:component-scan>
+
+</beans>
