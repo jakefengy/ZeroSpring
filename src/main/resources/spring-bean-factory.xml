@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 演示工厂配置方式：静态工厂方法，实例工厂方法 -->
+
+    <!-- 静态工厂方法 -->
+    <bean id="car" class="com.hello.spring.factory.StaticCarFactory"
+          factory-method="getCar">
+        <constructor-arg value="audi"/>
+    </bean>
+
+    <!-- 实例工厂方法 -->
+    <!-- 首先配置工厂实例，然后通过类似静态工厂的方式，取出工厂内的实例 -->
+    <bean id="car-factory" class="com.hello.spring.factory.InstanceCarFactory"/>
+
+    <bean id="car2" factory-bean="car-factory" factory-method="getCar">
+        <constructor-arg value="ford"/>
+    </bean>
+
+</beans>
