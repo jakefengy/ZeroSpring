@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="cycle" class="com.hello.spring.cycle.LifeCycle"
+          p:name="#{'测试生命周期'}" init-method="init" destroy-method="destroy"/>
+
+    <!-- bean 的后置处理器 BeanPostProcessor(interface)，只需在配置文件中添加一次，即可实现对文件中所有bean进行后置处理。
+     postProcessBeforeInitialization: 在init-method之前调用
+     postProcessAfterInitialization： 在init-method之后调用
+
+     返回值：可以是原始的bean，也可以是加工之后的bean -->
+
+    <bean class="com.hello.spring.cycle.MyPostProcessor"/>
+
+</beans>
