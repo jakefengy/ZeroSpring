@@ -11,14 +11,22 @@ AOP 面向切面编程 来自百度百科
 一批对象进行隔离，这样与一批对象之间降低了耦合性，可以就某个功能进行编程。
 
 
-Spring AOP 实现过程（以給四则运算添加日志为例）
+Spring AOP 实现过程
 如：
-    public int add(int i, int j) {
-        System.out.println("add start with " + i + " , " + j);
-        int result = i + j;
-        System.out.println("add ends with " + result);
-        return result;
-    }
+     Object result = null;
+     try {
+         // 前置通知 @Before
+         result = method.invoke(target, args);
+         // 返回通知 @AfterReturning
+     } catch (NullPointException e) {
+         e.printStackTrace();
+         // 异常通知 @AfterThrowing
+     } catch (Exception e) {
+         e.printStackTrace();
+         // 异常通知 @AfterThrowing
+     }
+
+     // 后置通知
 
 其中：
     System.out.println 为日志切面
@@ -27,10 +35,65 @@ Spring AOP 实现过程（以給四则运算添加日志为例）
 
 1、需要的包
 
-com.springsource.org.aopalliance.jar
-com.springsource.org.aspectj.weaver.jar
 spring-aop.jar
 spring-aspects.jar
 
-2、声明切面。
+2、声明切面。@Aspect  LoggerAspect.java
+说明：表明这个切面的作用，比如打印日志的切面、前置数据检查的切面
+
+3、声明切点。
+说明：定义程序在运行中，需要输出日志的位置。包含：
+@Before：前置通知，在程序执行前，先执行的程序段
+@After： 后置通知，在程序执行后，才执行的程序段（无论目标方法是否出现异常），不能获取目标方法的执行结果（return的内容）
+@AfterReturning：返回通知，能获取程序段执行的结果，即（return的内容），如果出现异常，则不能执行到该方法
+@AfterThrowing：异常通知，方法出异常的时候，执行的方法。通过异常的类型去匹配，比如：方法抛出NullPointException，但标记的时候，写的是RuntimeException，则执行不到（类似于多个catch的情况）
+@Around：环绕通知，以上几种通知的集合。实例：
+
+    @Around(value = "execution(* com.hello.spring.aop.impl.ArithmeticImpl.*(..))")
+    public Object around(ProceedingJoinPoint point) {
+
+        Object result = null;
+        String methodName = point.getSignature().getName();
+
+        try {
+            // 前置通知
+            System.out.println("The Method " + methodName + " begins with " + Arrays.asList(point.getArgs()));
+            result = point.proceed();
+            // 返回通知
+            System.out.println("The Method " + methodName + " return " + result);
+        } catch (Throwable e) {
+            // 异常通知
+            System.out.println("The Method " + methodName + " exception " + e);
+            throw new RuntimeException(e);
+        }
+
+        // 后置通知
+        System.out.println("The Method " + methodName + " ends");
+
+        return result;
+
+    }
+
+4、切面执行的优先级。假设有LoggingAspect和CheckAspect两个切面：
+则可以通过设置Order的方式，指定切面执行的顺序，Order的值越小，越先执行。
+
+5、切点方法的重用
+
+    // 声明
+    @Pointcut("execution(public int com.hello.spring.aop.impl.ArithmeticImpl.*(..))")
+    public void joinPointExpression() {
+
+    }
+
+    // 使用
+    @Before("joinPointExpression()")
+    public void beforeLogger(JoinPoint point) {
+
+        String methodName = point.getSignature().getName();
+        List<Object> args = Arrays.asList(point.getArgs());
+
+        System.out.println("The Method " + methodName + " before, with" + args);
+
+    }
+
 

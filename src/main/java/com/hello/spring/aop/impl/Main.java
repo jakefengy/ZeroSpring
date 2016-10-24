@@ -14,11 +14,7 @@ public class Main {
 
         Arithmetic arithmetic = (Arithmetic) ctx.getBean("arithmeticImpl");
 
-        int result = arithmetic.add(1, 2);
-        System.out.println(result);
-
-        result = arithmetic.mul(1, 2, 3);
-        System.out.println(result);
+        arithmetic.add(1, 2);
 
     }
 
