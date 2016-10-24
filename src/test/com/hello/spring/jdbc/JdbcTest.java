@@ -1,18 +1,21 @@
 package com.hello.spring.jdbc;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 2016-10-24.
@@ -21,11 +24,15 @@ public class JdbcTest {
 
     ApplicationContext ctx = null;
     JdbcTemplate template = null;
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate = null;
 
     {
         ctx = new ClassPathXmlApplicationContext("spring-jdbc-config.xml");
         template = (JdbcTemplate) ctx.getBean("jdbcTemplate");
+        namedParameterJdbcTemplate = ctx.getBean(NamedParameterJdbcTemplate.class);
     }
+
+    // Example JdbcTemplate
 
     @Test
     public void testConnection() throws SQLException {
@@ -106,5 +113,32 @@ public class JdbcTest {
         System.out.println(users);
 
     }
+
+    // Example NamedParameterJdbcTemplate
+
+    @Test
+    public void queryUser() {
+        String sql = "SELECT * FROM user";
+
+        SqlParameterSource source = new BeanPropertySqlParameterSource(User.class);
+        RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
+
+        List<User> users = namedParameterJdbcTemplate.query(sql, source, rowMapper);
+        System.out.println(users);
+
+    }
+
+    @Test
+    public void addUser() {
+        String sql = "INSERT INTO user(id, nickname, password, firstname, lastname) VALUES (:id,:nickname,:password,:firstname,:lastname)";
+
+        User user = new User(8, "DD", "123", "d", "d");
+
+        SqlParameterSource source = new BeanPropertySqlParameterSource(user);
+
+        namedParameterJdbcTemplate.update(sql, source);
+
+    }
+
 
 }
