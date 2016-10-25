@@ -20,6 +20,12 @@ public class BookDaoImpl implements BookDao {
         return template.queryForObject(sql, Integer.class, bookId);
     }
 
+    public int findStockById(int bookId) {
+        String sql = "SELECT stock from book WHERE id = ?";
+
+        return template.queryForObject(sql, Integer.class, bookId);
+    }
+
     public void updateBookCount(int bookId) throws BookCountException {
 
         String sql = "SELECT stock from book WHERE id = ?";

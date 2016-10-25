@@ -5,6 +5,6 @@ package com.hello.spring.tx;
  */
 public interface UserDao {
 
-    void updateMoney(int id, int money) throws UserMoneyException;
+    void updateMoney(int id, int money);
 
 }

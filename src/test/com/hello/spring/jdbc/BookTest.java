@@ -6,6 +6,10 @@ import com.hello.spring.tx.UserDao;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.w3c.dom.ls.LSInput;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 2016-10-25.
@@ -45,6 +49,18 @@ public class BookTest {
     public void testPurchase() {
 
         bookShopService.purchase(2, 1);
+
+    }
+
+    @Test
+    public void testCheckOut() {
+
+        List<Integer> bookIds = new ArrayList<Integer>();
+        bookIds.add(1);
+        bookIds.add(2);
+        bookIds.add(3);
+
+        bookShopService.checkOut(2, bookIds);
 
     }
 

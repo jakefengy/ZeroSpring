@@ -7,6 +7,8 @@ public interface BookDao {
 
     int findPriceById(int bookId);
 
-    void updateBookCount(int bookId) throws BookCountException;
+    int findStockById(int bookId);
+
+    void updateBookCount(int bookId);
 
 }
